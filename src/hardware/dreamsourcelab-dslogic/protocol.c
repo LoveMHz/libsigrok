@@ -621,6 +621,8 @@ SR_PRIV int dslogic_fpga_firmware_upload(const struct sr_dev_inst *sdi)
 		name = DSCOPE_FPGA_FIRMWARE;
 	} else if (!strcmp(devc->profile->model, "DSLogic U3Pro16")) {
 		name = DSLOGIC_U3PRO16_FPGA_FIRMWARE;
+	} else if (!strcmp(devc->profile->model, "DSLogic U3Pro32")) {
+		name = DSLOGIC_U3PRO32_FPGA_FIRMWARE;
 	} else {
 		sr_err("Failed to select FPGA firmware.");
 		return SR_ERR;

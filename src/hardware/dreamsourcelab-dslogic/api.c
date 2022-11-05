@@ -51,7 +51,13 @@ static const struct dslogic_profile supported_device[] = {
 	/* DreamSourceLab DSLogic U3Pro16 */
 	{ 0x2a0e, 0x002a, "DreamSourceLab", "DSLogic U3Pro16", NULL,
 		"dreamsourcelab-dslogic-basic-fx2.fw",
-		DSLOGIC_CAPS_ADF4360 | DSLOGIC_CAPS_USB30, "DreamSourceLab", "DSLogic", 
+		DSLOGIC_CAPS_ADF4360 | DSLOGIC_CAPS_USB30, "DreamSourceLab", "DSLogic",
+		2ULL * 1024ULL * 1024ULL * 1024ULL, 40,
+		1024, SR_MHZ(500), SR_MHZ(500), SR_GHZ(1), 5},
+	/* DreamSourceLab DSLogic U3Pro32 */
+	{ 0x2a0e, 0x002c, "DreamSourceLab", "DSLogic U3Pro32", NULL,
+		"dreamsourcelab-dslogic-basic-fx2.fw",
+		DSLOGIC_CAPS_ADF4360 | DSLOGIC_CAPS_USB30 | DSLOGIC_CAPS_LA_CH32, "DreamSourceLab", "DSLogic",
 		2ULL * 1024ULL * 1024ULL * 1024ULL, 40,
 		1024, SR_MHZ(500), SR_MHZ(500), SR_GHZ(1), 5},
 
@@ -115,7 +121,7 @@ static const uint64_t samplerates[] = {
 	SR_MHZ(400),
 };
 
-static const uint64_t samplerates_U3Pro16[] = {
+static const uint64_t samplerates_U3Pro[] = {
 	SR_KHZ(10),
 	SR_KHZ(20),
 	SR_KHZ(50),
@@ -287,9 +293,9 @@ static GSList *scan(struct sr_dev_driver *di, GSList *options)
 		sdi->priv = devc;
 		devices = g_slist_append(devices, sdi);
 
-		if (strcmp("DSLogic U3Pro16", devc->profile->model) == 0) {
-			devc->samplerates = samplerates_U3Pro16;
-			devc->num_samplerates = ARRAY_SIZE(samplerates_U3Pro16);
+		if (strcmp("DSLogic U3Pro16", devc->profile->model) == 0 || strcmp("DSLogic U3Pro32", devc->profile->model) == 0) {
+			devc->samplerates = samplerates_U3Pro;
+			devc->num_samplerates = ARRAY_SIZE(samplerates_U3Pro);
 		} else {
 			devc->samplerates = samplerates;
 			devc->num_samplerates = ARRAY_SIZE(samplerates);
